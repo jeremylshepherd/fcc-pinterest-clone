@@ -1,39 +1,45 @@
-var React = require("react"),
-    Nav = require("./Nav"),
-    Jumbotron = require("./Jumbotron"),
-    Subotron = require("./Subotron"),
-    InfoColumn = require("./InfoColumn"),
-    $ = require("jquery");
+import React from "react";
+import Nav from "./Nav";
+import Jumbotron from "./Jumbotron";
+import Subotron from "./Subotron";
+import InfoColumn from "./InfoColumn";
+import $ from "jquery";
 
 
-var ReactApp = React.createClass({
-    getInitialState: function() {
-        return ({
-            user: {}
-        });
-    },
+export default class ReactApp extends React.Component {
+    constructor() {
+        super();
+            
+        this.state = {
+            user: {},
+            auth: ""
+        };
+        
+        this.getUser = this.getUser.bind(this);
+    }
     
-    getUser: function() {
+    getUser() {
         $.ajax({
           url: '/api/me',
           dataType: 'json',
           cache: false,
-          success: function(data) {
+          success: data => {
             this.setState({
-                user: data
+                user: data,
+                displayName: data.github.displayName
               });
-          }.bind(this),
-          error: function(xhr, status, err) {
+          },
+          error: (xhr, status, err) => {
             console.error('/api/me', status, err.toString());
-          }.bind(this)
+          }
         });
-    },
+    }
     
-    componentDidMount: function() {
+    componentDidMount() {
         this.getUser();
-    },
+    }
     
-    render: function() {
+    render() {
         let data = [{
                 name: "React.JS",
                 className: "fa-code",
@@ -54,17 +60,15 @@ var ReactApp = React.createClass({
           <InfoColumn key ={i} {...datum} />
         );
       });
-      var user = JSON.stringify(this.state.user, null, 2);
+      const user = JSON.stringify(this.state.user, null, 2);
         return (
             <div>
                 <Nav />
-                <Jumbotron username={this.state.user.email}/>
+                <Jumbotron displayName={this.state.displayName}/>
                 <Subotron />
                 <div className="container">{infoNodes}</div>
                 <pre>{user}</pre>
             </div>
         );
     }
-});
-
-module.exports = ReactApp;
+}

@@ -1,5 +1,9 @@
 'use strict';
 
+require('babel-register')({
+    presets: ["es2015", "react", "stage-2"]
+});
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -11,24 +15,26 @@ var flash = require("express-flash");
 var logger = require("morgan");
 
 
-var app = express();
+const app = express();
 require('dotenv').load();
 
 require("./config/passport")(passport);
 
-var routes = require('./routes/index');
+const routes = require('./routes/index');
 
-mongoose.connect(process.env.MONGO_URI, function(err, db) {
+mongoose.connect(process.env.MONGODB_URI, (err, db) => {
   if(err) {console.log(err);}
 
-  console.log(`Connected to ${process.env.MONGO_URI}`);
+  console.log(`Connected to ${process.env.MONGODB_URI}`);
 });
 
 app.set('view engine', 'ejs');
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(logger('dev'));
+if(process.env.NODE_ENV === 'development') {
+  app.use(logger('dev'));
+}
 
 app.use(session({
 	secret: process.env.SESSION_SECRET,
@@ -46,8 +52,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', routes);
 app.enable('trust proxy');
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -57,7 +63,7 @@ app.use(function(req, res, next) {
 // development error handler
 // // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -69,7 +75,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
@@ -77,8 +83,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var port = process.env.PORT || 8080;
-app.listen(port,  function () {
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
 	console.log(`Node.js listening on port ${port}...`);
 });
 

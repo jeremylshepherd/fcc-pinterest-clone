@@ -13930,20 +13930,18 @@ var Jumbotron = React.createClass({
     },
 
     render: function render() {
-        var user = this.props.username ? this.props.username : "User Authentication";
-        return React.createElement(
-            "div",
-            { className: "container" },
-            React.createElement(
+        var user = this.props.displayName ? "Hello, " + this.props.displayName : "User Authentication";
+        var greeting;
+        if (this.props.displayName) {
+            var greeting = React.createElement(
+                "h3",
+                null,
+                "Welcome back! Let's get started with a new Project!"
+            );
+        } else {
+            var greeting = React.createElement(
                 "div",
-                { className: "jumbotron text-center " + this.state.shadow, onClick: this.handleShadow },
-                React.createElement(
-                    "h1",
-                    null,
-                    React.createElement("span", { className: "fa fa-user" }),
-                    " ",
-                    user
-                ),
+                null,
                 React.createElement(
                     "p",
                     null,
@@ -13961,6 +13959,23 @@ var Jumbotron = React.createClass({
                     React.createElement("span", { className: "fa fa-github", alt: "github logo" }),
                     " Github"
                 )
+            );
+        }
+
+        return React.createElement(
+            "div",
+            { className: "container" },
+            React.createElement(
+                "div",
+                { className: "jumbotron text-center " + this.state.shadow, onClick: this.handleShadow },
+                React.createElement(
+                    "h1",
+                    null,
+                    React.createElement("span", { className: "fa fa-user" }),
+                    " ",
+                    user
+                ),
+                greeting
             )
         );
     }
@@ -14018,7 +14033,8 @@ var ReactApp = React.createClass({
 
     getInitialState: function getInitialState() {
         return {
-            user: {}
+            user: {},
+            auth: ""
         };
     },
 
@@ -14029,7 +14045,8 @@ var ReactApp = React.createClass({
             cache: false,
             success: function (data) {
                 this.setState({
-                    user: data
+                    user: data,
+                    displayName: data.github.displayName
                 });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -14064,7 +14081,7 @@ var ReactApp = React.createClass({
             "div",
             null,
             React.createElement(Nav, null),
-            React.createElement(Jumbotron, { username: this.state.user.email }),
+            React.createElement(Jumbotron, { displayName: this.state.displayName }),
             React.createElement(Subotron, null),
             React.createElement(
                 "div",

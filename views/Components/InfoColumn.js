@@ -1,17 +1,15 @@
-var React = require("react");
+import React from "react";
 
-var InfoColumn = React.createClass({
-   render: function() {
-       return (
-            <div className="col-md-4 col-xs-12">                
-                <h3 className="text-center">
-                  <span className={"fa " + this.props.className}/>
-                  {"  " + this.props.name}
-                </h3>
-                <p>{this.props.description}</p>
-            </div>
-        );
-   } 
-});
+const InfoColumn = (props) => {
+    return (
+        <div className="col-md-4 col-xs-12">                
+            <h3 className="text-center">
+              <span className={"fa " + props.className}/>
+              {"  " + props.name}
+            </h3>
+            <p>{props.description}</p>
+        </div>
+    );
+};
 
-module.exports = InfoColumn;
+export default InfoColumn;

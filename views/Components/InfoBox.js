@@ -1,16 +1,14 @@
-var InfoColumn = require("./InfoColumn");
-var React = require("react");
+import InfoColumn from "./InfoColumn";
+import React from "react";
 
-var InfoBox = React.createClass({
-    render: function() {
-        return (
-            <div className="container">
-                <InfoColumn/>
-                <InfoColumn/>
-                <InfoColumn/>
-            </div>
-        );
-    }
-});
+const InfoBox = (props) => {
+    return (
+        <div className="container">
+            <InfoColumn/>
+            <InfoColumn/>
+            <InfoColumn/>
+        </div>
+    );
+};
 
-module.exports = InfoBox;
+export default InfoBox;

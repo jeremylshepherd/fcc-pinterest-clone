@@ -1,12 +1,14 @@
 'use strict';
+
 require('babel-register')({
-    presets: ['react']
+    presets: ["es2015", "react", "stage-2"]
 });
 
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/Users');
+var Poll = require('../models/Polls');
 var React = require("react");
 var ReactDOMServer = require("react-dom/server");
 var ReactApp = require("../views/Components/ReactApp");
@@ -15,7 +17,7 @@ var passport = require("passport");
 require("../config/passport");
 
 /******************************************************************************
-******************--------AUTHENTICATION ROUTES---------***********************
+******************________AUTHENTICATION ROUTES_________***********************
 ******************************************************************************/
 
 //Authentication middleware
@@ -29,7 +31,7 @@ function isLoggedIn(req, res, next) {
 }
 
 /******************
-******GITHUB*******
+*GITHUB************
 ******************/
 
 router.get('/auth/github', passport.authenticate('github'));
@@ -43,7 +45,7 @@ router.get('/auth/github/callback', passport.authenticate('github', { failureRed
 
 
 /******************
-******GOOGLE*******
+*GOOGLE************
 ******************/
 
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -56,7 +58,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
 );
 
 /*****************
-******TWITTER*****
+*TWITTER**********
 *****************/
 
 router.get('/auth/twitter', passport.authenticate('twitter'));
@@ -69,7 +71,7 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', { failureR
 );
 
 /*****************
-*****FACEBOOK*****
+*FACEBOOK*********
 *****************/
 
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
@@ -92,21 +94,30 @@ router.post('/signup', (req, res) => {
         if(!user) {
             var newUser = new User();
             
-            newUser.local.email = req.body.email;
-            newUser.local.password = newUser.generateHash(req.body.password);
-            newUser.local.firstName= req.body.firstName;
-            newUser.local.lastName = req.body.lastName;
-            newUser.local.fullName = req.body.firstName + " " + req.body.lastName;
-            
-            newUser.save((err) => {
+            User.find({}, (err, users) => {
                 if(err) {console.log(err);}
+                console.log(users.length);
+                newUser.local.email = req.body.email;
+                newUser.local.password = newUser.generateHash(req.body.password);
+                newUser.local.firstName= req.body.firstName;
+                newUser.local.lastName = req.body.lastName;
+                newUser.local.fullName = req.body.firstName + " " + req.body.lastName;
+                newUser.local.created = Date.now();
+                newUser.local.id = +(users.length) + 1; 
+                
+                newUser.save((err) => {
+                    if(err) {console.log(err);}
+                });
+                
+                req.flash('usercreated', 'New user created');
+                req.login(newUser, (err) => {
+                    if(err) {console.log(err);}
+                    return res.redirect('/');
+                });
             });
-            req.flash('usercreated', 'New user created');
-            req.login(newUser, (err) => {
-                if(err) {console.log(err);}
-                return res.redirect('/');
-            })
+            
         }else{
+            
             req.flash('signupMessage', 'Sorry, that user already exists.');
             res.redirect('/login');
         }
@@ -120,7 +131,7 @@ router.post('/signon', passport.authenticate('local', {
     }));
 
 /******************************************************************************
-*****************************Page Routing**************************************
+*****************____________Page Routing____________**************************
 ******************************************************************************/
 
 
@@ -128,7 +139,7 @@ router.get('/', isLoggedIn, (req, res) => {
     var reactString = ReactDOMServer.renderToString(
         React.createElement(ReactApp)
     );
-    res.render('index.ejs', {reactHTML : reactString, user: req.user});
+    res.render('index.ejs');
 });
 
 router.get('/login', (req, res) => {
@@ -152,13 +163,23 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+router.post('/poll', isLoggedIn, (req, res) => {
+    User.findOne({'_id': req.user._id}, (err, user) => {
+       if(err)  {console.log(err);}
+       
+       var obj = {};
+       obj.title = req.body.title;
+       
+    });
+});
+
 /******************************************************************************
-******************************API Routing**************************************
+****************______________API Routing______________************************
 ******************************************************************************/
 
 
 router.post('/test', function(req, res) {
-   res.json(req.body); 
+   res.json(req); 
 });
 
 router.get('/api/me', isLoggedIn, (req, res) => {
@@ -167,6 +188,20 @@ router.get('/api/me', isLoggedIn, (req, res) => {
     }else{
         res.json(req.user);
     }
+});
+
+router.get('/api/polls', (req, res) => {
+    Poll.find({}, (err, results) => {
+       if(err){console.log(err);}
+       res.json(results);
+    });
+});
+
+router.get('*', (req, res) => {
+    var reactString = ReactDOMServer.renderToString(
+        React.createElement(ReactApp)
+    );
+    res.render('index.ejs');
 });
 
 module.exports = router;

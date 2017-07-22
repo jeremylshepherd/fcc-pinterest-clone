@@ -7,63 +7,64 @@ var User = require('../models/Users');
 var configAuth = require('./auth');
 
 module.exports = function (passport) {
-	passport.serializeUser(function (user, done) {
-		done(null, user.id);
-	});
+    passport.serializeUser(function (user, done) {
+        done(null, user.id);
+    });
 
-	passport.deserializeUser(function (id, done) {
-		User.findById(id, function (err, user) {
-			done(err, user);
-		});
-	});
+    passport.deserializeUser(function (id, done) {
+        User.findById(id, function (err, user) {
+            done(err, user);
+        });
+    });
 
-/*
-|****************|
-|*****GITHUB*****|
-|****************|
-*/
+/*********************
+*GITHUB***************
+*********************/
 
-	passport.use(new GitHubStrategy({
-		clientID: configAuth.githubAuth.clientID,
-		clientSecret: configAuth.githubAuth.clientSecret,
-		callbackURL: configAuth.githubAuth.callbackURL
-	},
-	function (token, refreshToken, profile, done) {
-		process.nextTick(function () {
-			User.findOne({ 'github.id': profile.id }, function (err, user) {
-				if (err) {
-					return done(err);
-				}
+    passport.use(new GitHubStrategy({
+        clientID: configAuth.githubAuth.clientID,
+        clientSecret: configAuth.githubAuth.clientSecret,
+        callbackURL: configAuth.githubAuth.callbackURL
+    },
+    function (token, refreshToken, profile, done) {
+        process.nextTick(function () {
+            User.findOne({ 'github.id': profile.id }, function (err, user) {
+                if (err) {
+                    return done(err);
+                }
 
-				if (user) {
-					return done(null, user);
-				} else {
-					var newUser = new User();
+                if (user) {
+                    return done(null, user);
+                } else {
+                    var newUser = new User();
+                    
+                    console.log(JSON.stringify(profile, null, 2));
 
-					newUser.github.id = profile.id;
-					newUser.github.username = profile.username;
-					newUser.github.displayName = profile.displayName;
-					newUser.github.publicRepos = profile._json.public_repos;
+                    newUser.github.id = profile.id;
+                    newUser.github.token = profile.token;
+                    newUser.github.username = profile.username;
+                    newUser.github.displayName = profile.displayName;
+                    newUser.github.publicRepos = profile._json.public_repos;
+                    newUser.github.created = Date.now();
 
-					newUser.save(function (err) {
-						if (err) {
-							throw err;
-						}
+                    newUser.save(function (err) {
+                        if (err) {
+                            throw err;
+                        }
 
-						return done(null, newUser);
-					});
-				}
-			});
-		});
-	}));
-	
-/*
-|****************|
-|*****GOOGLE*****|
-|****************|
-*/
-	
-	passport.use(new GoogleStrategy({
+                        return done(null, newUser);
+                    });
+                }
+            });
+        });
+    }));
+
+    
+/*********************
+*GOOGLE***************
+*********************/
+    
+    passport.use(new GoogleStrategy({
         clientID        : configAuth.googleAuth.clientID,
         clientSecret    : configAuth.googleAuth.clientSecret,
         callbackURL     : configAuth.googleAuth.callbackURL
@@ -83,6 +84,7 @@ module.exports = function (passport) {
                     newUser.google.token = token;
                     newUser.google.name  = profile.displayName;
                     newUser.google.email = profile.emails[0].value;
+                    newUser.google.created = Date.now();
                     
                     newUser.save(function(err) {
                         if (err)
@@ -94,17 +96,16 @@ module.exports = function (passport) {
         });
     }));
     
-/*
-|****************|
-|****TWITTER*****|
-|****************|
-*/
+/*********************
+*TWITTER**************
+*********************/
     
     passport.use(new TwitterStrategy({
 
         consumerKey     : configAuth.twitterAuth.consumerKey,
         consumerSecret  : configAuth.twitterAuth.consumerSecret,
-        callbackURL     : configAuth.twitterAuth.callbackURL
+        callbackURL     : configAuth.twitterAuth.callbackURL,
+        includeEmail: true
 
     },
     function(token, tokenSecret, profile, done) {
@@ -125,6 +126,7 @@ module.exports = function (passport) {
                     newUser.twitter.token = token;
                     newUser.twitter.username = profile.username;
                     newUser.twitter.displayName = profile.displayName;
+                    newUser.twitter.created = Date.now();
 
                     // save our user into the database
                     newUser.save(function(err) {
@@ -137,11 +139,10 @@ module.exports = function (passport) {
         });
     }));
     
-/*
-|****************|
-|****FACEBOOK****|
-|****************|
-*/
+/*********************
+*FACEBOOK*************
+*********************/
+
     passport.use(new FacebookStrategy({
 
         // pull in our app id and secret from our auth.js file
@@ -164,6 +165,7 @@ module.exports = function (passport) {
                     newUser.facebook.id    = profile.id;
                     newUser.facebook.token = token;
                     newUser.facebook.name  = profile.displayName;
+                    newUser.facebook.created = Date.now();
                     
                     newUser.save(function(err) {
                         if (err)
@@ -176,9 +178,9 @@ module.exports = function (passport) {
         });
     }));
     
-/*****************|
-|***LOCAL-LOGIN***|
-|*****************/
+/*********************
+*LOCAL-LOGIN**********
+*********************/
     
     passport.use(new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
