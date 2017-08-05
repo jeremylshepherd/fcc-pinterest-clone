@@ -1,15 +1,33 @@
-import React from "react";
+import React from 'react';
+import Login from './Login';
+import Logout from './Logout';
+import { Link } from 'react-router';
 
 const Nav = (props) => {
+    let auth = props.auth ? <Logout {...props} /> : <Login />;
     return (
-        <nav className="navbar navbar-inverse">
-          <div className="container">
-            <span className="navbar-brand">
-                React Universal Template
-            </span>
-            <a href="/logout" className="btn btn-danger navbar-btn navbar-right"><span className="fa fa-eject"/> logout</a>
-          </div>
+        <nav className="navbar navbar-default">
+            <div className="container">
+                <span className="navbar-brand">
+                    <a href="/" className="no-link">
+                        <i className="fa fa-book" aria-hidden="true"/>
+                        BookClub
+                    </a>
+                </span>
+                <button
+                    type="button"
+                    className="navbar-toggle"
+                    data-toggle="collapse"
+                    data-target="#bookclub-menu"
+                >
+                    <span className="sr-only">Toggle navigation</span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                </button>
+                { auth }
+            </div>
         </nav>
     );
-}
+};
 export default Nav;

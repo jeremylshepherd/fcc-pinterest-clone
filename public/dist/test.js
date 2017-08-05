@@ -1,1 +1,0 @@
-alert("Yah, that verks!");
