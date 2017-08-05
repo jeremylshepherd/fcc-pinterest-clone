@@ -1,7 +1,7 @@
 {
   "name": "FCCBOOKTRADINGAPP",
   "version": "0.0.0",
-  "description": "An attempt to create a simple template for React applications with Authentication.",
+  "description": "FCC Book trading management application.",
   "main": "server.js",
   "repository": "https://github.com/jeremylshepherd/fcc-bookclub-app",
   "author": "Jeremy L. Shepherd <jeremylshepherd@gmail.com>",
