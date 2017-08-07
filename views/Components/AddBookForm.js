@@ -31,14 +31,14 @@ export default class AddBookForm extends React.Component {
             }
         });
     }
-    
+
     input(e) {
         const t = e.target;
         const name = t.name;
         const value = t.value;
-        
+
         this.setState({
-            [name] : value
+            [name]: value
         });
     }
 
@@ -54,11 +54,11 @@ export default class AddBookForm extends React.Component {
                     <form>
                         <div className="form-group">
                             <div className="input-group">
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="Find your book." 
-                                    name="book" 
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Find your book."
+                                    name="book"
                                     value={this.state.book}
                                     onChange={this.input}/>
                                 <span className="input-group-addon bg-danger" onClick={this.find}>Find</span>

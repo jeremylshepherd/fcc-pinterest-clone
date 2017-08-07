@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router';
 
 const Login = (props) => {
     return (
-        <div className="collapse navbar-collapse" id="bookclub-menu">
+        <div>
             <ul className="nav navbar-nav navbar-right">
-                <li><Link to="/login" className="navbar-right" data-target="#loginForm">Login</Link></li>
-                <li><Link to="/signup" className="navbar-right" data-target="#registerForm">Register</Link></li>
+                <li><span className="navbar-text col-xs-12 text-center">Login or Register with:</span></li>
+                <li><a href="/auth/twitter" className="twitter"><span className="fa fa-twitter" alt="twitter logo"></span> Twitter</a></li>
             </ul>
         </div>
     );

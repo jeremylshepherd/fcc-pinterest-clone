@@ -1,5 +1,4 @@
 import React from 'react';
-import Features from './Features';
 import Jumbotron from './Jumbotron';
 
 export default class Home extends React.Component {
@@ -7,7 +6,6 @@ export default class Home extends React.Component {
         return (
             <div>
                 <Jumbotron displayName={this.props.displayName}/>
-                <Features />
             </div>
         );
     }

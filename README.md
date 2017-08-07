@@ -1,16 +1,16 @@
-# FCC BookClub App
+# FCC Pinterest Clone
 
-### Free Code Camp Book Trading Application
+### Free Code Camp Pinterest Clone
 
 Built using Express, MongoDB(Mongoose), React, React-Router, Node.
 
 Register/Login
-[Working Demo](https://fccbookclub-jeremylshepherd.herokuapp.com)
+[Working Demo](https://fccwinterest-jeremylshepherd.herokuapp.com)
 ###### Login:
-![ScreenShot](/BookClub_login.png)
+![ScreenShot](/WInterest_Home_Unauth.png)
 ###### Home:
-![ScreenShot](/BookClub_home.png)
-###### AllBooks:
-![ScreenShot](/BookClub_allBooks.png)
-###### Dashboard:
-![ScreenShot](/BookClub_dashboard.png)
+![ScreenShot](/Winterest_Home_Page.png)
+###### My Wall:
+![ScreenShot](/Winterest_MyWins_Page.png)
+###### User Wall:
+![ScreenShot](/Winterest_User_Page.png)

@@ -1,5 +1,6 @@
 import React from 'react';
 import Nav from './Nav';
+import Modal from './AddWinModal';
 import Flash from './Flash';
 import $ from 'jquery';
 
@@ -9,27 +10,21 @@ class ReactApp extends React.Component {
 
         this.state = {
             user: {},
+            wins: [],
+            userWins: [],
             displayName: '',
+            username: '',
+            avatar: '',
             auth: false,
-            flash: null,
-            books: [],
-            searchResult: {},
-            userRequests: [],
-            userTrades: [],
-            userBooks: []
+            flash: null
         };
-        
+
         this.getUser = this.getUser.bind(this);
-        this.updateUser = this.updateUser.bind(this);
-        this.updatePass = this.updatePass.bind(this);
-        this.getBooks = this.getBooks.bind(this);
-        this.addBook = this.addBook.bind(this);
+        this.getWins = this.getWins.bind(this);
+        this.addWin = this.addWin.bind(this);
+        this.delWin = this.delWin.bind(this);
+        this.love = this.love.bind(this);
         this.clearFlash = this.clearFlash.bind(this);
-        this.request = this.request.bind(this);
-        this.approve = this.approve.bind(this);
-        this.reject = this.reject.bind(this);
-        this.ack = this.ack.bind(this);
-        this.ret = this.ret.bind(this);
     }
 
     getUser() {
@@ -40,17 +35,13 @@ class ReactApp extends React.Component {
             success: data => {
                 this.setState({
                     user: {
-                        local: data.local,
-                        books: data.books,
-                        loans: data.loans,
-                        requests: data.requests,
-                        trades: data.trades,
+                        twitter: data.twitter,
                         _id: data._id
                     },
-                    userRequests: data.requests,
-                    userTrades: data.trades,
-                    userBooks: data.books,
-                    displayName: data.local.userName,
+                    userWins: data.wins,
+                    avatar: data.twitter.avatar,
+                    displayName: data.twitter.displayName,
+                    username: data.twitter.username,
                     auth: true
                 });
             },
@@ -59,159 +50,79 @@ class ReactApp extends React.Component {
             }
         });
     }
-    
-    updateUser(obj) {
-        console.log('Method invoked');
-        $.ajax({
-            url: '/user/update',
-            data: obj,
-            method: 'POST',
-            success: data => {
-                this.setState({flash: data.flash});
-                this.getUser();
-            },
-            error: (xhr, status, err) => {
-                console.error('/user/update', status, err.toString());
-            }
-        });
-    }
-    
-    updatePass(obj) {
-        $.ajax({
-            url: '/user/change',
-            data: obj,
-            method: 'POST',
-            success: data => {
-                this.setState({flash: data.flash});
-                this.getUser();
-            },
-            error: (xhr, status, err) => {
-                console.error('/user/change', status, err.toString());
-            }
-        });
-    }
 
-    getBooks() {
+    getWins() {
         $.ajax({
-            url: '/api/books',
+            url: '/api/wins',
             dataType: 'json',
             cache: false,
             success: data => {
                 this.setState({
-                    books: data
+                    wins: data
                 });
             },
             error: (xhr, status, err) => {
-                console.error('/api/books', status, err.toString());
+                console.error('/api/wins', status, err.toString());
             }
         });
     }
 
-    addBook(obj) {
+    addWin(obj) {
         $.ajax({
-            url: `/api/addBook`,
-            data: obj,
+            url: '/api/win/add',
             method: 'POST',
+            data: obj,
             success: data => {
                 this.setState({
                     flash: data.flash
                 });
-                this.getBooks();
+                this.getWins();
                 this.getUser();
             },
             error: (xhr, status, err) => {
-                console.error('/api/add', status, err.toString());
+                console.log('/api/win/add', status, err.toString());
             }
         });
     }
-    
-    request(obj) {
+
+    delWin(obj) {
         $.ajax({
-            url: '/api/book/request',
-            data: obj,
-            method: 'POST',
-            success: data => {
-                this.setState({
-                    flash: data.flash
-                });
-            },
-            error: (xhr, status, err) => {
-                console.log('/api/book/request', status, err.toString());
-            }
-        });
-    }
-    
-    approve(obj) {
-        $.ajax({
-            url: '/api/request/accept',
+            url: '/api/win/del',
             method: 'POST',
             data: obj,
             success: data => {
                 this.setState({
                     flash: data.flash
                 });
+                this.getWins();
                 this.getUser();
             },
             error: (xhr, status, err) => {
-                console.log('/api/request/accept', status, err.toString());
+                console.log('/api/win/del', status, err.toString());
             }
         });
     }
-    
-    reject(obj) {
+
+    love(obj) {
         $.ajax({
-            url: '/api/request/reject',
+            url: '/api/win/love',
             method: 'POST',
             data: obj,
             success: data => {
                 this.setState({
                     flash: data.flash
                 });
-                this.getUser();
+                this.getWins();
             },
             error: (xhr, status, err) => {
-                console.log('/api/request/reject', status, err.toString());
-            }
-        });
-    }
-    
-    ack(obj) {
-        $.ajax({
-            url: '/api/request/ack',
-            method: 'POST',
-            data: obj,
-            success: data => {
-                this.setState({
-                    flash: data.flash
-                });
-                this.getUser();
-            },
-            error: (xhr, status, err) => {
-                console.log('/api/request/ack', status, err.toString());
-            }
-        });
-    }
-    
-    ret(obj) {
-        $.ajax({
-            url: '/api/request/ret',
-            method: 'POST',
-            data: obj,
-            success: data => {
-                this.setState({
-                    flash: data.flash
-                });
-                this.getUser();
-            },
-            error: (xhr, status, err) => {
-                console.log('/api/request/ret', status, err.toString());
+                console.log('/api/win/love', status, err.toString());
             }
         });
     }
 
     componentDidMount() {
         this.getUser();
-        this.getBooks();
+        this.getWins();
         if(this.state.flash !== null) {
             this.clearFlash();
         }
@@ -232,15 +143,10 @@ class ReactApp extends React.Component {
 
     render() {
         const props = {
-            ...this.state, 
-            request: this.request,
-            accept: this.approve,
-            reject: this.reject,
-            add: this.addBook,
-            update: this.updateUser,
-            change: this.updatePass,
-            ack: this.ack,
-            ret: this.ret
+            ...this.state,
+            add: this.addWin,
+            del: this.delWin,
+            inc: this.love
         };
         const childrenWithProps = React.Children.map(this.props.children, (child) => React.cloneElement(child, props)
         );
@@ -248,7 +154,8 @@ class ReactApp extends React.Component {
         return (
             <div>
                 {flash}
-                <Nav auth={this.state.auth} displayName={this.state.displayName}/>
+                <Nav auth={this.state.auth} displayName={this.state.displayName} username={this.state.username} avatar={this.state.avatar}/>
+                <Modal add={this.addWin} />
                 {childrenWithProps}
             </div>
         );
