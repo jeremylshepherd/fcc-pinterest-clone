@@ -38500,10 +38500,6 @@ var _ReactApp = require('../views/Components/ReactApp.js');
 
 var _ReactApp2 = _interopRequireDefault(_ReactApp);
 
-var _Home = require('../views/Components/Home.js');
-
-var _Home2 = _interopRequireDefault(_Home);
-
 var _AltDashboard = require('../views/Components/AltDashboard.js');
 
 var _AltDashboard2 = _interopRequireDefault(_AltDashboard);
@@ -38511,10 +38507,6 @@ var _AltDashboard2 = _interopRequireDefault(_AltDashboard);
 var _UserWall = require('../views/Components/UserWall.js');
 
 var _UserWall2 = _interopRequireDefault(_UserWall);
-
-var _UpdateUser = require('../views/Components/UpdateUser.js');
-
-var _UpdateUser2 = _interopRequireDefault(_UpdateUser);
 
 var _AllWins = require('../views/Components/AllWins.js');
 
@@ -38542,12 +38534,11 @@ _reactDom2.default.render(_react2.default.createElement(
         { path: '/', component: _ReactApp2.default },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: _AllWins2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: '/mywall', component: _AltDashboard2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/:username', component: _UserWall2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'settings', component: _UpdateUser2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: '/:username', component: _UserWall2.default })
     )
 ), app);
 
-},{"../views/Components/AllWins.js":258,"../views/Components/AltDashboard.js":259,"../views/Components/Home.js":261,"../views/Components/ReactApp.js":266,"../views/Components/UpdateUser.js":267,"../views/Components/UserWall.js":269,"bootstrap-jquery":1,"jquery":58,"react":253,"react-dom":68,"react-router":221}],257:[function(require,module,exports){
+},{"../views/Components/AllWins.js":258,"../views/Components/AltDashboard.js":259,"../views/Components/ReactApp.js":264,"../views/Components/UserWall.js":265,"bootstrap-jquery":1,"jquery":58,"react":253,"react-dom":68,"react-router":221}],257:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38728,7 +38719,7 @@ var AllWins = function AllWins(props) {
 
 exports.default = AllWins;
 
-},{"./Win":270,"react":253}],259:[function(require,module,exports){
+},{"./Win":266,"react":253}],259:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38800,7 +38791,7 @@ var Dashboard = function (_React$Component) {
 
 exports.default = Dashboard;
 
-},{"./Win":270,"react":253}],260:[function(require,module,exports){
+},{"./Win":266,"react":253}],260:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38841,119 +38832,6 @@ var Flash = function Flash(props) {
 exports.default = Flash;
 
 },{"react":253}],261:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Jumbotron = require('./Jumbotron');
-
-var _Jumbotron2 = _interopRequireDefault(_Jumbotron);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Home = function (_React$Component) {
-    _inherits(Home, _React$Component);
-
-    function Home() {
-        _classCallCheck(this, Home);
-
-        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
-    }
-
-    _createClass(Home, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_Jumbotron2.default, { displayName: this.props.displayName })
-            );
-        }
-    }]);
-
-    return Home;
-}(_react2.default.Component);
-
-exports.default = Home;
-
-},{"./Jumbotron":262,"react":253}],262:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Jumbotron = function (_React$Component) {
-    _inherits(Jumbotron, _React$Component);
-
-    function Jumbotron(props) {
-        _classCallCheck(this, Jumbotron);
-
-        var _this = _possibleConstructorReturn(this, (Jumbotron.__proto__ || Object.getPrototypeOf(Jumbotron)).call(this, props));
-
-        _this.state = {};
-        return _this;
-    }
-
-    _createClass(Jumbotron, [{
-        key: "render",
-        value: function render() {
-            return _react2.default.createElement(
-                "div",
-                { className: "jumbotron hero" },
-                _react2.default.createElement(
-                    "div",
-                    { className: "container text-center" },
-                    _react2.default.createElement(
-                        "h1",
-                        null,
-                        _react2.default.createElement(
-                            "i",
-                            null,
-                            "WIN"
-                        ),
-                        "terest"
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Jumbotron;
-}(_react2.default.Component);
-
-exports.default = Jumbotron;
-;
-
-},{"react":253}],263:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38998,7 +38876,7 @@ var Login = function Login(props) {
 
 exports.default = Login;
 
-},{"react":253}],264:[function(require,module,exports){
+},{"react":253}],262:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39047,7 +38925,7 @@ var Logout = function Logout(props) {
 
 exports.default = Logout;
 
-},{"react":253}],265:[function(require,module,exports){
+},{"react":253}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39168,7 +39046,7 @@ var Nav = function Nav(props) {
 };
 exports.default = Nav;
 
-},{"./Login":263,"./Logout":264,"react":253}],266:[function(require,module,exports){
+},{"./Login":261,"./Logout":262,"react":253}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39397,178 +39275,7 @@ var ReactApp = function (_React$Component) {
 
 exports.default = ReactApp;
 
-},{"./AddWinModal":257,"./Flash":260,"./Nav":265,"jquery":58,"react":253}],267:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _UpdateUserForm = require('./UpdateUserForm');
-
-var _UpdateUserForm2 = _interopRequireDefault(_UpdateUserForm);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var UpdateUser = function UpdateUser(props) {
-    return _react2.default.createElement(
-        'div',
-        { className: 'container' },
-        _react2.default.createElement(
-            'h2',
-            null,
-            'Update Your Information:'
-        ),
-        _react2.default.createElement('hr', null),
-        _react2.default.createElement(_UpdateUserForm2.default, { update: props.update })
-    );
-};
-
-exports.default = UpdateUser;
-
-},{"./UpdateUserForm":268,"react":253}],268:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var UpdateUserForm = function (_React$Component) {
-    _inherits(UpdateUserForm, _React$Component);
-
-    function UpdateUserForm(props) {
-        _classCallCheck(this, UpdateUserForm);
-
-        var _this = _possibleConstructorReturn(this, (UpdateUserForm.__proto__ || Object.getPrototypeOf(UpdateUserForm)).call(this, props));
-
-        _this.state = {
-            results: [],
-            selectedBook: '',
-            fullName: '',
-            city: '',
-            state: '',
-            zip: ''
-        };
-
-        _this.input = _this.input.bind(_this);
-        _this.update = _this.update.bind(_this);
-        return _this;
-    }
-
-    _createClass(UpdateUserForm, [{
-        key: 'update',
-        value: function update() {
-            var obj = {};
-            obj.fullName = this.state.fullName;
-            obj.city = this.state.city;
-            obj.state = this.state.state;
-            obj.zip = this.state.zip;
-
-            this.props.update(obj);
-
-            this.setState({
-                results: [],
-                selectedBook: '',
-                fullName: '',
-                city: '',
-                state: '',
-                zip: ''
-            });
-        }
-    }, {
-        key: 'input',
-        value: function input(e) {
-            var t = e.target;
-            var name = t.name;
-            var value = t.value;
-
-            this.setState(_defineProperty({}, name, value));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'form',
-                null,
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement('input', {
-                        type: 'text',
-                        className: 'form-control',
-                        placeholder: 'Full Name',
-                        name: 'fullName',
-                        value: this.state.fullName,
-                        onChange: this.input })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement('input', {
-                        type: 'text',
-                        className: 'form-control',
-                        placeholder: 'City',
-                        name: 'city',
-                        value: this.state.city,
-                        onChange: this.input })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement('input', {
-                        type: 'text',
-                        className: 'form-control',
-                        placeholder: 'State',
-                        name: 'state',
-                        value: this.state.state,
-                        onChange: this.input })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement('input', {
-                        type: 'text',
-                        className: 'form-control',
-                        placeholder: 'Zip Code',
-                        name: 'zip',
-                        value: this.state.zip,
-                        onChange: this.input })
-                ),
-                _react2.default.createElement(
-                    'span',
-                    { className: 'btn btn-danger', onClick: this.update },
-                    'Update'
-                )
-            );
-        }
-    }]);
-
-    return UpdateUserForm;
-}(_react2.default.Component);
-
-exports.default = UpdateUserForm;
-
-},{"react":253}],269:[function(require,module,exports){
+},{"./AddWinModal":257,"./Flash":260,"./Nav":263,"jquery":58,"react":253}],265:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39672,7 +39379,7 @@ var UserWall = function (_React$Component) {
 
 exports.default = UserWall;
 
-},{"./Win":270,"react":253}],270:[function(require,module,exports){
+},{"./Win":266,"react":253}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
