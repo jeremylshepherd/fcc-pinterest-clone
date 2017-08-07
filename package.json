@@ -1,6 +1,6 @@
 {
   "name": "FCCPINTERESTCLONE",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "FCC Pinterest Clone application.",
   "main": "server.js",
   "repository": "https://github.com/jeremylshepherd/fcc-pinterest-clone",
